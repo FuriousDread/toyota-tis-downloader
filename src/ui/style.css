@@ -1,0 +1,92 @@
+/* Theme and global sizing ------------------------------------------------- */
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1b1b1b;
+  background: #f3f4f6;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1040px; margin: 0 auto; padding: 28px 22px 44px; }
+
+/* Page structure and reusable controls ---------------------------------- */
+header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; margin-bottom: 18px; }
+h1 { margin: 0 0 6px; font-size: 30px; }
+h2 { margin: 0 0 10px; font-size: 19px; }
+p { margin: 4px 0; }
+section { background: #fff; border: 1px solid #d9dce1; border-radius: 12px; padding: 18px; margin: 14px 0; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
+button, input, select { font: inherit; }
+button { border: 1px solid #b9bec7; border-radius: 7px; background: #fff; padding: 8px 12px; cursor: pointer; }
+button:hover:not(:disabled) { background: #f2f3f5; }
+button:disabled { cursor: not-allowed; opacity: .5; }
+button.primary { background: #24292f; color: #fff; border-color: #24292f; }
+button.primary:hover:not(:disabled) { background: #343a40; }
+button.secondary { color: #555; }
+input, select { width: 100%; border: 1px solid #c8ccd3; border-radius: 7px; padding: 9px 10px; background: #fff; }
+.row { display: flex; align-items: center; gap: 9px; }
+.wrap { flex-wrap: wrap; }
+.grow { flex: 1; min-width: 260px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+label { display: flex; flex-direction: column; gap: 5px; font-size: 13px; font-weight: 600; }
+.hint { color: #656a73; font-size: 13px; margin-bottom: 12px; }
+.optional { font-size: 12px; color: #777; font-weight: 400; }
+.badge { border-radius: 999px; padding: 6px 10px; font-size: 13px; white-space: nowrap; }
+.badge.good { background: #e7f6ea; color: #176b2c; }
+.badge.bad { background: #fbe9e9; color: #8b2222; }
+
+/* Catalog result table and selection chips ------------------------------ */
+.sectionHeader { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.documents { border: 1px solid #d9dce1; border-radius: 8px; max-height: 340px; overflow: auto; }
+.documents.empty { padding: 18px; color: #777; }
+.doc { display: grid; grid-template-columns: auto 120px 150px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border-bottom: 1px solid #eceef1; font-size: 13px; }
+.doc:last-child { border-bottom: 0; }
+.doc input { width: auto; }
+.doc .type { font-weight: 700; }
+.doc .pub { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.doc .title { color: #555; overflow-wrap: anywhere; }
+.doc.obsolete { background: #fff8e5; }
+.obsolete-badge { color: #815d00; background: #fff0b8; border-radius: 999px; padding: 3px 7px; font-size: 10px; font-weight: 800; }
+.obsolete-group > summary { cursor: pointer; padding: 10px; color: #656a73; background: #f5f6f8; }
+.obsolete-group[open] > summary { border-bottom: 1px solid #d9dce1; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; background: #eef0f3; border-radius: 999px; padding: 6px 9px; font-size: 12px; }
+.chip button { border: 0; padding: 0 3px; background: transparent; }
+
+/* Download status -------------------------------------------------------- */
+.downloadRow { margin-top: 12px; }
+progress { width: 100%; height: 20px; margin: 14px 0 8px; }
+#status { min-height: 120px; max-height: 250px; overflow: auto; margin: 0; border-radius: 8px; padding: 10px; background: #11151a; color: #d9e0e7; white-space: pre-wrap; font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; }
+#summary { color: #555; font-size: 13px; }
+footer { color: #737880; font-size: 12px; padding: 7px 4px; }
+code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+/* Dark mode -------------------------------------------------------------- */
+/* Electron's nativeTheme toggle changes this media query immediately. */
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; color: #e6e9ed; background: #111418; }
+  section { background: #1b1f24; border-color: #343a40; box-shadow: none; }
+  button { color: #e6e9ed; background: #252a30; border-color: #4a515a; }
+  button:hover:not(:disabled) { background: #30363d; }
+  button.primary { color: #fff; background: #3b6ea8; border-color: #4b80ba; }
+  button.primary:hover:not(:disabled) { background: #477db7; }
+  button.secondary { color: #c9ced6; }
+  input, select { color: #e6e9ed; background: #15191e; border-color: #454c55; }
+  .hint, .optional, .documents.empty, footer { color: #aeb5bf; }
+  .documents { border-color: #343a40; }
+  .doc { border-color: #30363d; }
+  .doc .title, #summary { color: #c1c7d0; }
+  .doc.obsolete { background: #2b281e; }
+  .obsolete-badge { color: #ffe7a1; background: #5c4714; }
+  .obsolete-group > summary { color: #c1c7d0; background: #23282e; }
+  .obsolete-group[open] > summary { border-color: #343a40; }
+  .chip { background: #2b3037; }
+  .badge.good { background: #153c22; color: #8ee5a5; }
+  .badge.bad { background: #472020; color: #ffb0b0; }
+}
+
+/* Collapse the three-column layout on narrower windows. */
+@media (max-width: 760px) {
+  .grid3 { grid-template-columns: 1fr; }
+  .sectionHeader { display: block; }
+  .doc { grid-template-columns: auto 110px 1fr auto; }
+  .doc .title { grid-column: 2 / -1; }
+}

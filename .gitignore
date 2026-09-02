@@ -1,0 +1,28 @@
+# Dependencies and generated build/package output.
+node_modules/
+dist/
+release/
+coverage/
+*.tsbuildinfo
+
+# Downloaded Toyota material stays local and must never be committed.
+manuals/
+downloads/
+
+# Authentication captures and session material may contain credentials.
+*.har
+*.part
+.env
+.env.*
+!.env.example
+cookies.txt
+session.json
+auth.json
+
+# Local diagnostic logs.
+*.log
+
+# Common operating-system metadata.
+.DS_Store
+Thumbs.db
+Desktop.ini

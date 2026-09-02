@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    // Electron 44 and the supported Node runtime understand modern ES2022 syntax.
+    "target": "ES2022",
+    // Electron's main/preload processes load the compiled output through require().
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": ".",
+    "outDir": "dist",
+    // DOM types are needed for code injected into Toyota pages.
+    "lib": ["ES2022", "DOM"],
+    // Treat type errors as build failures; third-party declaration internals are skipped.
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
+  },
+  // The renderer is plain browser JavaScript; TypeScript builds the privileged app code.
+  "include": ["src/app/**/*.ts", "src/core/**/*.ts"]
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Static local UI. Remote Toyota pages are opened only in separate windows. -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toyota TIS Downloader</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <!-- Current session state is updated by renderer.js after a real TIS check. -->
+    <header>
+      <div>
+        <h1>Toyota TIS Downloader</h1>
+        <button id="themeToggle" type="button">Dark Mode</button>
+        <p>Log into your own TIS account, select a vehicle, then choose what to save.</p>
+      </div>
+      <div id="loginBadge" class="badge bad">Not logged in</div>
+    </header>
+
+    <!-- Step 1: authenticate in Toyota's own page; credentials never enter this UI. -->
+    <section>
+      <h2>1. Toyota TIS login</h2>
+      <p class="hint">The real Toyota login opens in a separate window. Enter your username, password, and MFA there; this app never asks you to paste a cookie.</p>
+      <div class="row wrap">
+        <button id="openLogin" class="primary">Open TIS Login</button>
+        <button id="checkLogin">I finished logging in</button>
+        <button id="logout" class="secondary">Clear saved TIS session</button>
+      </div>
+    </section>
+
+    <!-- Step 2: cascading values come from the live authenticated catalog. -->
+    <section>
+      <h2>2. Vehicle</h2>
+      <div class="grid3">
+        <label>Division / Make
+          <select id="division" disabled><option value="">Log in first...</option></select>
+        </label>
+        <label>Model
+          <select id="model" disabled><option value="">Select division first...</option></select>
+        </label>
+        <label>Year
+          <select id="year" disabled><option value="">Select model first...</option></select>
+        </label>
+      </div>
+      <button id="findDocs" class="primary" disabled>Find TIS Documents</button>
+    </section>
+
+    <!-- Step 3: normalized catalog results are rendered as selectable rows. -->
+    <section>
+      <div class="sectionHeader">
+        <div>
+          <h2>3. Documents</h2>
+          <p class="hint">Current publications are selected by default; obsolete publications remain available but unchecked. Manuals preserve their hierarchy, while bulletins and other standalone documents are saved as individual PDFs.</p>
+        </div>
+        <div class="row wrap">
+          <button id="selectAll">All</button>
+          <button id="selectManuals">Manuals</button>
+          <button id="selectStandalone">Standalone</button>
+          <button id="selectNone">None</button>
+        </div>
+      </div>
+      <div id="documents" class="documents empty">No vehicle search has been run.</div>
+    </section>
+
+    <!-- Step 4: escape hatch for a known manual ID or viewer URL. -->
+    <section>
+      <h2>4. Advanced manual input <span class="optional">optional</span></h2>
+      <p class="hint">Useful if Toyota's catalog misses something. Accepts <code>RM12345@2016</code>, <code>cr/BM30N0U@2016</code>, <code>atm/RM1021Ua</code>, or a complete Toyota TIS viewer URL.</p>
+      <div class="row">
+        <input id="manualInput" class="grow" placeholder="Manual ID, directory/ID, or TIS viewer URL" />
+        <button id="addManual">Add manual</button>
+      </div>
+      <div id="manuals" class="chips"></div>
+    </section>
+
+    <!-- Step 5: destination, progress, and final download counters. -->
+    <section>
+      <h2>5. Download</h2>
+      <div class="row">
+        <input id="output" class="grow" readonly placeholder="Choose an output folder" />
+        <button id="chooseOutput">Choose folder</button>
+      </div>
+      <div class="row wrap downloadRow">
+        <button id="download" class="primary" disabled>Download Selected</button>
+        <span id="summary"></span>
+      </div>
+      <progress id="progress" value="0" max="1"></progress>
+      <pre id="status">Ready.</pre>
+    </section>
+
+    <footer>
+      This app uses your existing TIS subscription. It does not include Toyota documents or bypass authentication/MFA.
+    </footer>
+  </main>
+
+  <!-- Loaded last so every element referenced by renderer.js already exists. -->
+  <script src="renderer.js"></script>
+</body>
+</html>

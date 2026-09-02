@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manual Locator</title>
+    <!-- saveToc.ts writes toc.js beside this file for each downloaded manual. -->
+    <script src="toc.js"></script>
+</head>
+<body>
+<h1>Manual Locator</h1>
+<p>Paste a URL from TechInfo and we'll open it in your Manual. Copy links from the manual PDFs and paste them here.</p>
+<p>This only works if <code>toc.js</code> is in this folder and we're at the root of the manual.</p>
+<p>Table of contents status: <span id="tocstatus">loading...</span></p>
+<form id="search-form">
+    <input type="text" id="urlbox" placeholder="https://techinfo.toyota.com/t3Portal/document/rm/...">
+    <button type="submit" id="search" disabled>Go</button>
+</form>
+<p id="locatorstatus">Enter a TechInfo URL and we'll open it in your manual.</p>
+<script>
+  // toc.js assigns the filtered manual tree to document.toc.
+  let toc = document.toc;
+  if (toc) {
+    document.getElementById('tocstatus').textContent = "toc.js loaded";
+    document.getElementById('search').disabled = false;
+  } else {
+    document.getElementById('tocstatus').textContent = "couldn't find or there was an error loading toc.js in this directory";
+  }
+
+  // Translate a copied online TechInfo page URL into the matching local PDF path.
+  function handleClick(e) {
+    e.preventDefault();
+    const url = document.querySelector('input').value;
+    try {
+      const urlobj = new URL(url);
+      if (urlobj.hostname !== 'techinfo.toyota.com') {
+        document.getElementById('locatorstatus').textContent = 'This is not a TechInfo URL.';
+        return;
+      }
+      const pathname = urlobj.pathname;
+      const path = searchToC(toc, pathname, []);
+      if (!path) {
+        document.getElementById('locatorstatus').textContent = 'Could not find this page in the manual.';
+        return;
+      }
+      // toc.js already contains the exact Windows-safe names used on disk.
+      const location = path.map(p => encodeURIComponent(p)).join('/');
+      window.open(`${location}.pdf`);
+    } catch (e) {
+      document.getElementById('locatorstatus').textContent = 'Could not parse the URL.';
+      console.error(e);
+      return;
+    }
+    document.getElementById('locatorstatus').textContent = 'OK';
+    document.getElementById("urlbox").value = "";
+    document.getElementById("urlbox").focus();
+  }
+
+  // Depth-first traversal returns the chapter/page names leading to one TIS href.
+  function searchToC(toc, path, objpath = []) {
+    for (const chapter in toc) {
+      if (typeof toc[chapter] === 'string') {
+        if (toc[chapter] === path) return objpath.concat(chapter);
+      } else {
+        const result = searchToC(toc[chapter], path, objpath.concat(chapter));
+        if (result) return result;
+      }
+    }
+  }
+  document.getElementById("search-form").addEventListener("submit", handleClick);
+</script>
+</body>
+</html>
