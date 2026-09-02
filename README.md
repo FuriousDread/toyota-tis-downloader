@@ -27,13 +27,16 @@ The basic idea is simple: sign into Toyota TechInfo through the app, choose a ve
 
 There are two main ways to use the program.
 
-### Option 1: Use the `.exe`
+### Option 1: Download a Windows release
 
 This is the easiest option.
 
-If you downloaded a packaged Windows release, just run the installer or portable `.exe` and open **Toyota TIS Downloader**.
+The latest release has two versions:
 
-No Node.js setup is needed for the packaged version.
+- **Portable EXE** - download it and run it directly. Nothing needs to be installed.
+- **Windows ZIP** - extract the folder and run `Toyota TIS Downloader.exe`.
+
+No Node.js setup is needed for either version.
 
 ### Option 2: Run it from the source code
 
