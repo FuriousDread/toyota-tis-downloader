@@ -13,7 +13,7 @@ The basic idea is simple: sign into Toyota TechInfo through the app, choose a ve
 ## Table of Contents
 
 - [Running it](#running-it)
-  - [Option 1: Use the `.exe`](#option-1-use-the-exe)
+  - [Option 1: Download a Windows release](#option-1-download-a-windows-release)
   - [Option 2: Run it from the source code](#option-2-run-it-from-the-source-code)
 - [Basic use](#basic-use)
 - [If something goes wrong](#if-something-goes-wrong)
@@ -43,7 +43,7 @@ No Node.js setup is needed for either version.
 You will need:
 
 - Windows 10 or 11
-- [Node.js](https://nodejs.org/) 22 or newer
+- [Node.js](https://nodejs.org/) 22.12 or newer
 - Your own active Toyota TechInfo subscription
 
 Download or clone the repository, open a terminal in the project folder, and run:
